@@ -1,0 +1,41 @@
+1. 客戶(帳號/密碼)
+	- user1/user1
+	- user2/user2
+	- user3/user3
+2. 運貨人員(帳號/密碼)
+	- employee1/employee1
+	- employee2/employee2
+	- employee3/employee3
+3. API
+	- 客戶登入 http://35.185.106.143/customer/login/{username}/{password}
+		- {username} : 帳號
+		- {password} : 密碼
+	  回傳資料 
+		成功 -> {id},{暱稱},{地址} [逗號隔開]
+		失敗 -> ERROR
+		
+	- 客戶查詢貨運人員座標 http://35.185.106.143/customer/location/{id}
+		- {id} : ID
+	  回傳資料 
+		成功 -> {經度},{緯度} [逗號隔開]	
+		失敗 -> ERROR
+		
+	- 貨運人員登入 http://35.185.106.143/deliveryman/login/{username}/{password}
+		- {username} : 帳號
+		- {password} : 密碼
+		
+	  回傳資料 
+		成功 -> {id},{暱稱} [逗號隔開]
+		失敗 -> ERROR
+		
+	- 貨運人員回寫資料 http://35.185.106.143/deliveryman/update/{longitude}/{latitude}/{id}
+		- {id} : ID
+		- {longitude} : 經度
+		- {latitude} : 緯度
+	  回傳資料 
+		成功 -> OK
+		失敗 -> ERROR
+
+4. Database Online Admin Page
+	- http://35.185.106.143/console
+	- JDBC URL: jdbc:h2:~/appinventor-db	
