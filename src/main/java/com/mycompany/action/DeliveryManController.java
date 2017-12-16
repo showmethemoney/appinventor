@@ -8,19 +8,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.entity.DeliveryMan;
 import com.mycompany.service.DeliveryManService;
 
 @Controller
+@RestController
+@RequestMapping("/deliveryman")
 public class DeliveryManController {
 	protected static final Logger logger = LoggerFactory.getLogger(DeliveryManController.class);
 
 	@Autowired
 	private DeliveryManService service = null;
 	
-	@RequestMapping(value = "/deliveryman/login/{username}/{password}", method = { RequestMethod.GET })
-	@ResponseBody
+	@RequestMapping(value = "/login/{username}/{password}", method = { RequestMethod.GET })
 	public String login(@PathVariable("username") String username, @PathVariable("password") String password) {
 		String result = "ERROR";
 		
@@ -35,8 +37,7 @@ public class DeliveryManController {
 		return result;
  	}
 	
-	@RequestMapping(value = "/deliveryman/update/{longitude}/{latitude}/{id}", method = { RequestMethod.GET })
-	@ResponseBody
+	@RequestMapping(value = "/update/{longitude}/{latitude}/{id}", method = { RequestMethod.GET })
 	public String update(@PathVariable("id") String id, @PathVariable("longitude") String longitude, @PathVariable("latitude") String latitude) {
 		String result = "ERROR";
 		
