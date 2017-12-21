@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycompany.SpringBootWebApplication;
 import com.mycompany.entity.Customer;
 import com.mycompany.service.CustomerService;
 
@@ -27,7 +28,7 @@ public class CustomerController
 		try {
 			Customer entity = service.findCustomerByUsernameAndPassword( username, password );
 
-			result = entity.getId() + "," + entity.getNickname() + "," + entity.getAddress();
+			result = entity.getId() + SpringBootWebApplication.SEPERATOR + entity.getNickname() + SpringBootWebApplication.SEPERATOR + entity.getAddress();
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );
 		}
@@ -43,7 +44,7 @@ public class CustomerController
 			Customer entity = service.findCustomerById( id );
 
 			if (null != entity) {
-				result = entity.getDeliveryMan().getLongitude() + "," + entity.getDeliveryMan().getLatitude();
+				result = entity.getDeliveryMan().getLongitude() + SpringBootWebApplication.SEPERATOR + entity.getDeliveryMan().getLatitude();
 			}
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mycompany.SpringBootWebApplication;
 import com.mycompany.entity.DeliveryMan;
 import com.mycompany.service.DeliveryManService;
 
@@ -29,7 +29,7 @@ public class DeliveryManController {
 		try {
 			DeliveryMan entity = service.findDeliveryManByUsernameAndPassword(username, password);
 			
-			result = entity.getId() + "," + entity.getNickname();
+			result = entity.getId() + SpringBootWebApplication.SEPERATOR + entity.getNickname();
 		} catch (Throwable cause) {
 			logger.error(cause.getMessage(), cause);
 		}

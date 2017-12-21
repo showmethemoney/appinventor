@@ -17,7 +17,9 @@ import com.mycompany.service.DeliveryManService;
 public class SpringBootWebApplication
 {
 	protected static final Logger logger = LoggerFactory.getLogger( SpringBootWebApplication.class );
-
+	
+	public static final String SEPERATOR = ",";
+	
 	@Autowired
 	private CustomerService customerService = null;
 	@Autowired
