@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.mycompany.entity.Customer;
 import com.mycompany.entity.DeliveryMan;
@@ -14,6 +15,7 @@ import com.mycompany.service.CustomerService;
 import com.mycompany.service.DeliveryManService;
 
 @SpringBootApplication
+@EnableAsync
 public class SpringBootWebApplication
 {
 	protected static final Logger logger = LoggerFactory.getLogger( SpringBootWebApplication.class );
