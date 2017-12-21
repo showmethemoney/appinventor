@@ -36,27 +36,29 @@ public class TestGoogleMapDirectionAPI
 			
 			GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
 
-			DirectionsResult directionsResult = DirectionsApi.getDirections( context, "台北市信義路五段7號", "新北市新莊區中正路510號" )
+			DirectionsResult directionsResult = DirectionsApi.getDirections( context, "新北市新莊區中正路510號", "花蓮縣秀林鄉富世村富世291號" )
 					.avoid( DirectionsApi.RouteRestriction.HIGHWAYS )
 			        .await();
 
 			for (DirectionsRoute route : directionsResult.routes) {
 				for (DirectionsLeg leg : route.legs) {
 					for (DirectionsStep step : leg.steps) {
-						logger.info( "instructions : {}, start : {}, end : {}, duration : {}", step.htmlInstructions, step.startLocation.toUrlValue(), step.endLocation, step.duration.inSeconds );
+//						logger.info( "instructions : {}, start : {}, end : {}, duration : {}", step.htmlInstructions, step.startLocation.toUrlValue(), step.endLocation, step.duration.inSeconds );
+						logger.info( "{}, {}, {}", step.startLocation.toUrlValue(), step.endLocation, step.duration.inSeconds );
 						
-						locations.add( step.startLocation.toUrlValue() );
-						locations.add( step.endLocation.toUrlValue() );
+//						locations.add( step.startLocation.toUrlValue() );
+//						locations.add( step.endLocation.toUrlValue() );
 					}
 				}
 			}
 			
-			for(String location : locations) {
-				logger.info(location);
-			}
+//			for(String location : locations) {
+//				logger.info(location);
+//			}
 			
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );
 		}
 	}
+	
 }
