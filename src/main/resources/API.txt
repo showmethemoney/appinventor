@@ -35,7 +35,12 @@
 	  回傳資料 
 		成功 -> OK
 		失敗 -> ERROR
-
+	- 自動更新地圖 http://35.185.106.143//auto/{deliveryman}
+		- {deliveryman} : 運貨人員帳號
+		資訊在 resources/{deliveryman}.txt
+	  回傳資料 
+		成功 -> OK				
+	
 4. Database Online Admin Page
 	- http://35.185.106.143/console
 	- JDBC URL: jdbc:h2:~/appinventor-db	
