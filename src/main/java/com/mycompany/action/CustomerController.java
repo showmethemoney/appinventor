@@ -23,7 +23,7 @@ public class CustomerController
 
 	@RequestMapping(value = "/login/{username}/{password}", method = { RequestMethod.GET })
 	public String login(@PathVariable("username") String username, @PathVariable("password") String password) {
-		String result = "ERROR";
+		String result = ResultType.FAILED.getMessage();
 
 		try {
 			Customer entity = service.findCustomerByUsernameAndPassword( username, password );
@@ -38,7 +38,7 @@ public class CustomerController
 
 	@RequestMapping(value = "/location/{id}", method = { RequestMethod.GET })
 	public String getLocation(@PathVariable("id") String id) {
-		String result = "ERROR";
+		String result = ResultType.FAILED.getMessage();
 
 		try {
 			Customer entity = service.findCustomerById( id );

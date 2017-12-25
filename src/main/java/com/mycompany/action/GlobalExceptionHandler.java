@@ -16,6 +16,6 @@ public class GlobalExceptionHandler
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String noHandlerFoundException(NoHandlerFoundException cause) {
-		return "Error";
+		return ResultType.FAILED.getMessage();
 	}
 }
