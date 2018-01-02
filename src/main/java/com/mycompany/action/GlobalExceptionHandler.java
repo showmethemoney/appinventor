@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.google.gson.GsonBuilder;
+import com.mycompany.bean.Result;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler
 {
@@ -16,6 +19,9 @@ public class GlobalExceptionHandler
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String noHandlerFoundException(NoHandlerFoundException cause) {
-		return ResultType.FAILED.getMessage();
+		Result result = new Result();
+		result.setStatus( ResultType.FAILED.getMessage() );
+		
+		return new GsonBuilder().create().toJson( result );
 	}
 }

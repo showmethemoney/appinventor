@@ -7,39 +7,43 @@
 	- employee2/employee2
 	- employee3/employee3
 3. API
+	回應格式: {"id":"","status":"","nickname":"","address":"","longitude":"","latitude":""}
+	status: 成功 OK, 失敗 ERROR
+	
 	- 客戶登入 http://35.185.106.143/customer/login/{username}/{password}
 		- {username} : 帳號
 		- {password} : 密碼
 	  回傳資料 
-		成功 -> {id},{暱稱},{地址} [逗號隔開]
-		失敗 -> ERROR
+		成功 -> id, status (OK), nickname, address
+		失敗 -> status (ERROR)
 		
 	- 客戶查詢貨運人員座標 http://35.185.106.143/customer/location/{id}
 		- {id} : ID
 	  回傳資料 
-		成功 -> {經度},{緯度} [逗號隔開]	
-		失敗 -> ERROR
+		成功 -> id, status (OK), nickname, address, longitude, latitude	
+		失敗 -> status (ERROR)
 		
 	- 貨運人員登入 http://35.185.106.143/deliveryman/login/{username}/{password}
 		- {username} : 帳號
 		- {password} : 密碼
 		
 	  回傳資料 
-		成功 -> {id},{暱稱} [逗號隔開]
-		失敗 -> ERROR
+		成功 -> id, status (OK), nickname
+		失敗 -> status (ERROR)
 		
 	- 貨運人員回寫資料 http://35.185.106.143/deliveryman/update/{longitude}/{latitude}/{id}
 		- {id} : ID
 		- {longitude} : 經度
 		- {latitude} : 緯度
 	  回傳資料 
-		成功 -> OK
-		失敗 -> ERROR
+		成功 -> status (OK)
+		失敗 -> status (ERROR)
 	- 自動更新地圖 http://35.185.106.143//auto/{deliveryman}
 		- {deliveryman} : 運貨人員帳號
 		資訊在 resources/{deliveryman}.txt
 	  回傳資料 
-		成功 -> OK				
+		成功 -> status (OK)				
+		失敗 -> status (ERROR)
 	
 4. Database Online Admin Page
 	- http://35.185.106.143/console
