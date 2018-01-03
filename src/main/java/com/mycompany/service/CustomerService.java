@@ -18,7 +18,8 @@ public class CustomerService {
 	private static final String NAMED_DELETE_CUSTOMER = "DELETE FROM Customer o";
 	private static final String NAMED_QUERY_FIND_CUSTOMER_BY_ID = "FROM Customer o WHERE o.id = :id";
 	private static final String NAMED_QUERY_FIND_CUSTOMER_BY_USERNAME_AND_PASSWORD = "FROM Customer o WHERE o.name = :name AND o.password = :password";
-
+	private static final String NAMED_QUERY_FIND_CUSTOMER_BY_DELIVERYMAN = "FROM Customer o WHERE o.deliveryMan.id = :deliveryManId";
+	
 	@PersistenceContext
 	private EntityManager entityManager = null;
 
@@ -40,8 +41,20 @@ public class CustomerService {
 		Customer result = null;
 
 		try {
-			result = (Customer) entityManager.createQuery(NAMED_QUERY_FIND_CUSTOMER_BY_ID).setParameter("id", id)
-					.getSingleResult();
+			result = (Customer) entityManager.createQuery(NAMED_QUERY_FIND_CUSTOMER_BY_ID).setParameter("id", id).getSingleResult();
+		} catch (Throwable cause) {
+			logger.error(cause.getMessage(), cause);
+		}
+
+		return result;
+	}
+	
+	@Transactional(propagation = Propagation.NEVER)
+	public Customer findCustomerByDeliveryMan(String deliveryManId) {
+		Customer result = null;
+
+		try {
+			result = (Customer) entityManager.createQuery(NAMED_QUERY_FIND_CUSTOMER_BY_DELIVERYMAN).setParameter("deliveryManId", deliveryManId).getSingleResult();
 		} catch (Throwable cause) {
 			logger.error(cause.getMessage(), cause);
 		}

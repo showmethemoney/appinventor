@@ -65,4 +65,19 @@ public class CustomerController
 
 		return new GsonBuilder().create().toJson( result );
 	}
+	
+//	@RequestMapping(value = "/metrics/{id}", method = { RequestMethod.GET })
+//	public String getMetrics(@PathVariable("id") String id) {
+//		Result result = new Result();
+//
+//		try {
+//			
+//		} catch (Throwable cause) {
+//			logger.error( cause.getMessage(), cause );
+//
+//			result.setStatus( ResultType.FAILED.getMessage() );
+//		}
+//
+//		return new GsonBuilder().create().toJson( result );
+//	}
 }

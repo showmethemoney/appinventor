@@ -38,6 +38,13 @@
 	  回傳資料 
 		成功 -> status (OK)
 		失敗 -> status (ERROR)
+		
+	- 貨運人員取得客戶資料 http://35.185.106.143/deliveryman/customer/{id}
+		- {id} : 貨運人員 ID
+	  回傳資料 
+		成功 -> id, status (OK), nickname, address
+		失敗 -> status (ERROR)
+		
 	- 自動更新地圖 http://35.185.106.143//auto/{deliveryman}
 		- {deliveryman} : 運貨人員帳號
 		資訊在 resources/{deliveryman}.txt

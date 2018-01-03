@@ -2,6 +2,7 @@ package com.mycompany.google;
 
 import java.util.LinkedHashSet;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,8 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
-import com.google.maps.model.DirectionsStep;
+import com.google.maps.model.LatLng;
+import com.mycompany.service.GoogleGeoService;
 
 public class TestGoogleMapDirectionAPI
 {
@@ -19,6 +21,30 @@ public class TestGoogleMapDirectionAPI
 
 	private static String API_KEY = "AIzaSyCVPVHlKbkHE9fl3d913ZAyBJIWLSEJUX4";
 
+	@Test
+	public void testGeocoding() {
+		try {
+			GoogleGeoService service = new GoogleGeoService();
+//			LatLng latLng = service.geocode( "花蓮縣秀林鄉富世村富世291號" );
+//			logger.info( "{} {}", latLng.lat, latLng.lng ); //24.1579087 121.6224745
+			
+			String address = service.reverseGeocode( "24.1579087", "121.6224745" );
+			logger.info( address );
+			
+			// GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
+
+			// GeocodingResult[] results = GeocodingApi.geocode( context, "花蓮縣秀林鄉富世村富世291號" ).await();
+			//
+			// for (GeocodingResult result : results) {
+			// LatLng latlng = result.geometry.location;
+			// logger.info( "{} {}", latlng.lng, latlng.lat );
+			// }
+		} catch (Throwable cause) {
+			logger.error( cause.getMessage(), cause );
+		}
+	}
+
+	@Ignore
 	@Test
 	public void testTestGoogleMap() {
 		try {
@@ -31,34 +57,41 @@ public class TestGoogleMapDirectionAPI
 			// HttpEntity entity = httpclient.execute( httpget ).getEntity();
 			//
 			// logger.info( IOUtils.toString( entity.getContent(), "UTF-8" ) );
-			
+
 			LinkedHashSet<String> locations = new LinkedHashSet<String>();
-			
+
 			GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
 
 			DirectionsResult directionsResult = DirectionsApi.getDirections( context, "新北市新莊區中正路510號", "花蓮縣秀林鄉富世村富世291號" )
-					.avoid( DirectionsApi.RouteRestriction.HIGHWAYS )
-			        .await();
+			        .avoid( DirectionsApi.RouteRestriction.HIGHWAYS ).await();
 
 			for (DirectionsRoute route : directionsResult.routes) {
 				for (DirectionsLeg leg : route.legs) {
-					for (DirectionsStep step : leg.steps) {
-//						logger.info( "instructions : {}, start : {}, end : {}, duration : {}", step.htmlInstructions, step.startLocation.toUrlValue(), step.endLocation, step.duration.inSeconds );
-						logger.info( "{}, {}, {}", step.startLocation.toUrlValue(), step.endLocation, step.duration.inSeconds );
-						
-//						locations.add( step.startLocation.toUrlValue() );
-//						locations.add( step.endLocation.toUrlValue() );
-					}
+					logger.info( leg.distance.humanReadable );
+					logger.info( leg.duration.humanReadable );
 				}
 			}
-			
-//			for(String location : locations) {
-//				logger.info(location);
-//			}
-			
+
+			// for (DirectionsRoute route : directionsResult.routes) {
+			// for (DirectionsLeg leg : route.legs) {
+			// for (DirectionsStep step : leg.steps) {
+			// // logger.info( "instructions : {}, start : {}, end : {}, duration : {}", step.htmlInstructions, step.startLocation.toUrlValue(),
+			// // step.endLocation, step.duration.inSeconds );
+			// logger.info( "{}, {}, {}", step.startLocation.toUrlValue(), step.endLocation, step.duration.inSeconds );
+			//
+			// // locations.add( step.startLocation.toUrlValue() );
+			// // locations.add( step.endLocation.toUrlValue() );
+			// }
+			// }
+			// }
+
+			// for(String location : locations) {
+			// logger.info(location);
+			// }
+
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );
 		}
 	}
-	
+
 }

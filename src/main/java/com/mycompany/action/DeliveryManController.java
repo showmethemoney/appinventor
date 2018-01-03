@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.GsonBuilder;
 import com.mycompany.bean.Result;
+import com.mycompany.entity.Customer;
 import com.mycompany.entity.DeliveryMan;
+import com.mycompany.service.CustomerService;
 import com.mycompany.service.DeliveryManService;
 
 @RestController
@@ -20,14 +22,36 @@ public class DeliveryManController
 	protected static final Logger logger = LoggerFactory.getLogger( DeliveryManController.class );
 
 	@Autowired
-	private DeliveryManService service = null;
+	private DeliveryManService deliveryManService = null;
+	@Autowired
+	private CustomerService customerService = null;
 
+	@RequestMapping(value = "/customer/{id}", method = { RequestMethod.GET })
+	public String getCustomerInfo(@PathVariable("id") String id) {
+		Result result = new Result();
+
+		try {
+			Customer entity = customerService.findCustomerByDeliveryMan( id );
+
+			result.setStatus( ResultType.SUCCESS.getMessage() );
+			result.setId( entity.getId() );
+			result.setNickname( entity.getNickname() );
+			result.setAddress( entity.getAddress() );
+		} catch (Throwable cause) {
+			logger.error( cause.getMessage(), cause );
+			
+			result.setStatus( ResultType.FAILED.getMessage() );
+		}
+
+		return new GsonBuilder().create().toJson( result );
+	}
+	
 	@RequestMapping(value = "/login/{username}/{password}", method = { RequestMethod.GET })
 	public String login(@PathVariable("username") String username, @PathVariable("password") String password) {
 		Result result = new Result();
 
 		try {
-			DeliveryMan entity = service.findDeliveryManByUsernameAndPassword( username, password );
+			DeliveryMan entity = deliveryManService.findDeliveryManByUsernameAndPassword( username, password );
 
 			result.setStatus( ResultType.SUCCESS.getMessage() );
 			result.setId( entity.getId() );
@@ -46,11 +70,11 @@ public class DeliveryManController
 		Result result = new Result();
 
 		try {
-			DeliveryMan entity = service.findDeliveryManByID( id );
+			DeliveryMan entity = deliveryManService.findDeliveryManByID( id );
 			entity.setLongitude( longitude );
 			entity.setLatitude( latitude );
 
-			service.update( entity );
+			deliveryManService.update( entity );
 
 			result.setStatus( ResultType.SUCCESS.getMessage() );
 		} catch (Throwable cause) {
