@@ -4,15 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.maps.DirectionsApi;
+import com.google.maps.DistanceMatrixApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
+import com.google.maps.DirectionsApi.RouteRestriction;
 import com.google.maps.model.AddressType;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
-import com.mycompany.bean.DirectionMetrics;
+import com.mycompany.bean.DistanceMatrixResult;
 
 public class GoogleGeoService
 {
@@ -43,7 +48,8 @@ public class GoogleGeoService
 		try {
 			GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
 			LatLng latLng = new LatLng( Double.parseDouble( latitude ), Double.parseDouble( longitude ) );
-			GeocodingResult[] geocodingResults = GeocodingApi.reverseGeocode( context, latLng ).resultType( AddressType.STREET_ADDRESS ).language( lANGUAGE ).await();
+			GeocodingResult[] geocodingResults = GeocodingApi.reverseGeocode( context, latLng ).resultType( AddressType.STREET_ADDRESS ).language( lANGUAGE )
+			        .await();
 
 			for (GeocodingResult geocodingResult : geocodingResults) {
 				result = geocodingResult.formattedAddress;
@@ -55,19 +61,22 @@ public class GoogleGeoService
 		return result;
 	}
 
-	public DirectionMetrics getLocatoinDirectionMetrics(String startAddress, String endAddress) {
-		DirectionMetrics result = new DirectionMetrics();
+	public DistanceMatrixResult getDistanceMatrix(String origin, String destination) {
+		DistanceMatrixResult result = new DistanceMatrixResult();
 
 		try {
 			GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
-			DirectionsResult directionsResult = DirectionsApi.getDirections( context, startAddress, endAddress ).language( lANGUAGE ).avoid( DirectionsApi.RouteRestriction.HIGHWAYS ).await();
 
-			for (DirectionsRoute route : directionsResult.routes) {
-				for (DirectionsLeg leg : route.legs) {
-					result.setDistance( leg.distance.humanReadable );
-					result.setDuration( leg.duration.humanReadable );
+			DistanceMatrix distanceMatrix = DistanceMatrixApi.getDistanceMatrix( context, new String[] { origin }, new String[] { destination } )
+			        .avoid( RouteRestriction.HIGHWAYS ).language( lANGUAGE ).await();
+
+			for (DistanceMatrixRow distanceMatrixRow : distanceMatrix.rows) {
+				for (DistanceMatrixElement distanceMatrixElement : distanceMatrixRow.elements) {
+					result.setDistance( distanceMatrixElement.distance.humanReadable );
+					result.setDuration( distanceMatrixElement.duration.humanReadable );
 				}
 			}
+
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );
 		}

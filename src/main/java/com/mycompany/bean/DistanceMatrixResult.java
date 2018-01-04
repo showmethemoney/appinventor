@@ -1,13 +1,13 @@
 package com.mycompany.bean;
 
-public class DirectionMetrics
+public class DistanceMatrixResult
 {
 	private String distance = null;
 	private String duration = null;
 	
-	public DirectionMetrics() {}
+	public DistanceMatrixResult() {}
 	
-	public DirectionMetrics(String distance, String duration) {
+	public DistanceMatrixResult(String distance, String duration) {
 		this.distance = distance;
 		this.duration = duration;
 	}

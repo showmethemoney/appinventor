@@ -8,11 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.maps.DirectionsApi;
+import com.google.maps.DirectionsApi.RouteRestriction;
+import com.google.maps.DistanceMatrixApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
-import com.google.maps.model.LatLng;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixRow;
+import com.mycompany.bean.DistanceMatrixResult;
 import com.mycompany.service.GoogleGeoService;
 
 public class TestGoogleMapDirectionAPI
@@ -22,15 +27,40 @@ public class TestGoogleMapDirectionAPI
 	private static String API_KEY = "AIzaSyCVPVHlKbkHE9fl3d913ZAyBJIWLSEJUX4";
 
 	@Test
+	public void testDistanceMatrix() {
+		try {
+			GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
+			String[] origins = { "台北市信義路五段7號" };
+			String[] destinations = { "花蓮縣秀林鄉富世村富世291號" };
+			DistanceMatrix distanceMatrix = DistanceMatrixApi.getDistanceMatrix( context, origins, destinations ).avoid( RouteRestriction.HIGHWAYS )
+			        .language( "zh-TW" ).await();
+
+			for (DistanceMatrixRow distanceMatrixRow : distanceMatrix.rows) {
+				for (DistanceMatrixElement distanceMatrixElement : distanceMatrixRow.elements) {
+					logger.info( distanceMatrixElement.distance.humanReadable );
+					logger.info( distanceMatrixElement.duration.humanReadable );
+				}
+			}
+
+		} catch (Throwable cause) {
+			logger.error( cause.getMessage(), cause );
+		}
+	}
+
+	@Ignore
+	@Test
 	public void testGeocoding() {
 		try {
 			GoogleGeoService service = new GoogleGeoService();
-//			LatLng latLng = service.geocode( "花蓮縣秀林鄉富世村富世291號" );
-//			logger.info( "{} {}", latLng.lat, latLng.lng ); //24.1579087 121.6224745
-			
+			// LatLng latLng = service.geocode( "花蓮縣秀林鄉富世村富世291號" );
+			// logger.info( "{} {}", latLng.lat, latLng.lng ); //24.1579087 121.6224745
+
 			String address = service.reverseGeocode( "24.1579087", "121.6224745" );
 			logger.info( address );
-			
+
+			DistanceMatrixResult metrics = service.getDistanceMatrix( "台北市信義路五段7號", "花蓮縣秀林鄉富世村富世291號" );
+			logger.info( "{} - {}", metrics.getDistance(), metrics.getDuration() );
+
 			// GeoApiContext context = new GeoApiContext.Builder().apiKey( API_KEY ).build();
 
 			// GeocodingResult[] results = GeocodingApi.geocode( context, "花蓮縣秀林鄉富世村富世291號" ).await();

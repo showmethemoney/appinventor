@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.GsonBuilder;
-import com.mycompany.bean.DirectionMetrics;
+import com.mycompany.bean.DistanceMatrixResult;
 import com.mycompany.bean.Result;
 import com.mycompany.entity.Customer;
 import com.mycompany.service.CustomerService;
@@ -56,7 +56,7 @@ public class CustomerController
 				//換算目前送貨人員的地址
 				String deliveryManLocation = geoService.reverseGeocode( entity.getDeliveryMan().getLatitude(), entity.getDeliveryMan().getLongitude() );
 				//換算目前送貨人員到客戶所需的時間跟距離
-				DirectionMetrics metrics = geoService.getLocatoinDirectionMetrics( deliveryManLocation, entity.getAddress() );
+				DistanceMatrixResult metrics = geoService.getDistanceMatrix( deliveryManLocation, entity.getAddress() );
 				
 				result.setStatus( ResultType.SUCCESS.getMessage() );
 				result.setId( entity.getId() );
