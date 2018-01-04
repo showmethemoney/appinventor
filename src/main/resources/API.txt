@@ -7,26 +7,33 @@
 	- employee2/employee2
 	- employee3/employee3
 3. API
-	回應格式: {"id":"","status":"","nickname":"","address":"","longitude":"","latitude":""}
+	回應格式: {"id":"","status":"","nickname":"","customerLocation":"","longitude":"","latitude":"","duration":"","distance":"","deliveryLocation":""}
+	id: 資料庫PK
 	status: 成功 OK, 失敗 ERROR
+	nickname: 用戶名
+	customerLocation: 客戶送貨地址  
+	longitude: 經度
+	latitude: 緯度
+	duration: 預計花費時間
+	distance: 剩下距離
+	deliveryLocation: 送貨員目前地址
 	
 	- 客戶登入 http://35.185.106.143/customer/login/{username}/{password}
 		- {username} : 帳號
 		- {password} : 密碼
 	  回傳資料 
-		成功 -> id, status (OK), nickname, address
+		成功 -> id, status (OK), nickname, customerLocation
 		失敗 -> status (ERROR)
 		
 	- 客戶查詢貨運人員座標 http://35.185.106.143/customer/location/{id}
 		- {id} : ID
 	  回傳資料 
-		成功 -> id, status (OK), nickname, address, longitude, latitude	
+		成功 -> id, status (OK), nickname, customerLocation, longitude, latitude, duration, distance, deliveryLocation
 		失敗 -> status (ERROR)
 		
 	- 貨運人員登入 http://35.185.106.143/deliveryman/login/{username}/{password}
 		- {username} : 帳號
-		- {password} : 密碼
-		
+		- {password} : 密碼		
 	  回傳資料 
 		成功 -> id, status (OK), nickname
 		失敗 -> status (ERROR)
@@ -42,7 +49,7 @@
 	- 貨運人員取得客戶資料 http://35.185.106.143/deliveryman/customer/{id}
 		- {id} : 貨運人員 ID
 	  回傳資料 
-		成功 -> id, status (OK), nickname, address
+		成功 -> id, status (OK), nickname, customerLocation
 		失敗 -> status (ERROR)
 		
 	- 自動更新地圖 http://35.185.106.143//auto/{deliveryman}

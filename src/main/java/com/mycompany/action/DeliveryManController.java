@@ -36,7 +36,7 @@ public class DeliveryManController
 			result.setStatus( ResultType.SUCCESS.getMessage() );
 			result.setId( entity.getId() );
 			result.setNickname( entity.getNickname() );
-			result.setAddress( entity.getAddress() );
+			result.setCustomerLocation( entity.getAddress() );
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );
 			
