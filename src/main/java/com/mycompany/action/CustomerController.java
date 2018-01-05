@@ -23,6 +23,7 @@ public class CustomerController
 
 	@Autowired
 	private CustomerService customerService = null;
+	@Autowired
 	private GoogleGeoService geoService = null;
 	
 	@RequestMapping(value = "/login/{username}/{password}", method = { RequestMethod.GET })
@@ -48,7 +49,6 @@ public class CustomerController
 	@RequestMapping(value = "/location/{id}", method = { RequestMethod.GET })
 	public String getLocation(@PathVariable("id") String id) {
 		Result result = new Result();
-
 		try {
 			Customer entity = customerService.findCustomerById( id );
 
