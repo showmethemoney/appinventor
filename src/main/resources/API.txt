@@ -53,14 +53,13 @@
 		成功 -> status (OK)
 		失敗 -> status (ERROR)
 		
-	- 貨運人員取得客戶資料 http://35.185.106.143/deliveryman/tobeshipped
-		- 
+	- 貨運人員取得客戶資料 http://35.185.106.143/deliveryman/customer/{id} 
+		- {id} : 貨運人員 ID
 	  回傳資料 
 		成功 -> id, status (OK), nickname, customerLocation
 		失敗 -> status (ERROR)
 
-	- 貨運人員查詢尚未出貨客戶 http://35.185.106.143/deliveryman/customer/{id}
-		- {id} : 貨運人員 ID
+	- 貨運人員查詢尚未出貨客戶 http://35.185.106.143/deliveryman/tobeshipped
 	  回傳資料 
 		格式: {"count":,"customers":[{"id":"","nickname":""}]}
 		count: 總筆數
