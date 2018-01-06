@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.GsonBuilder;
+import com.mycompany.bean.AssignStatusResult;
 import com.mycompany.bean.DistanceMatrixResult;
 import com.mycompany.bean.Result;
 import com.mycompany.entity.Customer;
@@ -68,6 +69,20 @@ public class CustomerController
 				result.setDuration( metrics.getDuration() );
 				result.setDeliveryLocation( deliveryManLocation );				
 			}
+		} catch (Throwable cause) {
+			logger.error( cause.getMessage(), cause );
+
+			result.setStatus( ResultType.FAILED.getMessage() );
+		}
+
+		return new GsonBuilder().create().toJson( result );
+	}
+	
+	@RequestMapping(value = "/check/{id}", method = { RequestMethod.GET })
+	public String checkAssign(@PathVariable("id") String id) {
+		AssignStatusResult result = new AssignStatusResult();
+		try {
+			result.setStatus( String.valueOf( customerService.isShippedById( id ) ) );
 		} catch (Throwable cause) {
 			logger.error( cause.getMessage(), cause );
 

@@ -31,6 +31,13 @@
 		成功 -> id, status (OK), nickname, customerLocation, longitude, latitude, duration, distance, deliveryLocation
 		失敗 -> status (ERROR)
 		
+	- 客戶查詢是否出貨 http://35.185.106.143/customer/check/{id}
+		- {id} : ID
+	  回傳資料
+		格式: {"status":""}
+		成功 -> status (true)
+		失敗 -> status (false)
+		
 	- 貨運人員登入 http://35.185.106.143/deliveryman/login/{username}/{password}
 		- {username} : 帳號
 		- {password} : 密碼		
@@ -46,10 +53,27 @@
 		成功 -> status (OK)
 		失敗 -> status (ERROR)
 		
-	- 貨運人員取得客戶資料 http://35.185.106.143/deliveryman/customer/{id}
-		- {id} : 貨運人員 ID
+	- 貨運人員取得客戶資料 http://35.185.106.143/deliveryman/tobeshipped
+		- 
 	  回傳資料 
 		成功 -> id, status (OK), nickname, customerLocation
+		失敗 -> status (ERROR)
+
+	- 貨運人員查詢尚未出貨客戶 http://35.185.106.143/deliveryman/customer/{id}
+		- {id} : 貨運人員 ID
+	  回傳資料 
+		格式: {"count":,"customers":[{"id":"","nickname":""}]}
+		count: 總筆數
+		customers: 客戶資料[多筆]
+			id: 資料庫PK
+			nickname: 用戶名
+		成功 -> count > 0, customers 多筆資料
+		失敗 -> count == 0
+
+	- 貨運人員出貨給客戶 http://35.185.106.143/deliveryman/shipping/{id}/{customerId}
+		- {id} : 貨運人員 ID
+		- {customerId} : 客戶 ID
+		成功 -> status (OK)				
 		失敗 -> status (ERROR)
 		
 	- 自動更新地圖 http://35.185.106.143//auto/{deliveryman}

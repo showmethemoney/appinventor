@@ -60,13 +60,13 @@ public class SpringBootWebApplication
 				deliveryManService.save( deliveryB );
 				deliveryManService.save( deliveryC );
 
-				deliveryA = deliveryManService.findDeliveryManByUsernameAndPassword( "employee1", "employee1" );
-				deliveryB = deliveryManService.findDeliveryManByUsernameAndPassword( "employee2", "employee2" );
-				deliveryC = deliveryManService.findDeliveryManByUsernameAndPassword( "employee3", "employee3" );
+//				deliveryA = deliveryManService.findDeliveryManByUsernameAndPassword( "employee1", "employee1" );
+//				deliveryB = deliveryManService.findDeliveryManByUsernameAndPassword( "employee2", "employee2" );
+//				deliveryC = deliveryManService.findDeliveryManByUsernameAndPassword( "employee3", "employee3" );
 
-				Customer customerA = new Customer( "user1", "user1", "消費者A", "屏東縣車城鄉後灣村後灣路2號", deliveryA );
-				Customer customerB = new Customer( "user2", "user2", "消費者B", "南投縣水里鄉55344中山路一段515號", deliveryB );
-				Customer customerC = new Customer( "user3", "user3", "消費者C", "花蓮縣秀林鄉富世村富世291號", deliveryC );
+				Customer customerA = new Customer( "user1", "user1", "消費者A", "屏東縣車城鄉後灣村後灣路2號", null );
+				Customer customerB = new Customer( "user2", "user2", "消費者B", "南投縣水里鄉55344中山路一段515號", null );
+				Customer customerC = new Customer( "user3", "user3", "消費者C", "花蓮縣秀林鄉富世村富世291號", null );
 				
 				customerService.save( customerA );
 				customerService.save( customerB );

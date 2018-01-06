@@ -13,7 +13,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "CUSTOMER")
-public class Customer {
+public class Customer
+{
 
 	@Id
 	@GeneratedValue(generator = "uuid")
@@ -28,7 +29,7 @@ public class Customer {
 	private String password = null;
 	@Column(name = "ADDRESS")
 	private String address = null;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "DELIVERY_MAN_ID")
 	private DeliveryMan deliveryMan = null;
 
